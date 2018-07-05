@@ -2,6 +2,7 @@ import inquirer from 'inquirer'
 
 import gameReducer, {move} from './game'
 import {createStore} from 'redux'
+const game = createStore(gameReducer)
 
 const printBoard = () => {
   const {board} = game.getState()
@@ -21,12 +22,13 @@ const getInput = player => async () => {
     name: 'coord',
     message: `${turn}'s move (row,col):`
   }])
+  console.log('Im in',ans)
   const [row=0, col=0] = ans.coord.split(/[,\s+]/).map(x => +x)
   game.dispatch(move(turn, [row, col]))
 }
 
 // Create the store
-const game = createStore(gameReducer)
+
 
 // Debug: Print the state
 // game.subscribe(() => console.log(game.getState()))
